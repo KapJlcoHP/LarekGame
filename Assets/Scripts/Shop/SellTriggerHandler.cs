@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+//комментарий для коммита
 public class SellTriggerHandler : MonoBehaviour
 {
     public Order orderSystem;

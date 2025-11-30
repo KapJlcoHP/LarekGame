@@ -7,7 +7,7 @@ public class handsPositionLogic : MonoBehaviour
     private int lenght = 1;
     public LayerMask Default;
 
-    void Update()
+    void FixedUpdate()
     {
         RaycastHit hit;
         if (Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, lenght, Default)) transform.position = hit.point;

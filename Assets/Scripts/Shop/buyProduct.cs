@@ -5,6 +5,7 @@ using TMPro;
 
 public class buyProduct : MonoBehaviour
 {
+    public List<Sprite> productSprites = new List<Sprite>();
     public List<GameObject> productPrefabs = new List<GameObject>();
     public WalletSystem walletSystem;
     public GameObject buyMenu;
@@ -34,7 +35,19 @@ public class buyProduct : MonoBehaviour
                 Destroy(child.gameObject);
             foreach (var product in productPrefabs)
             {
+                var image = productInfoPrefab.transform.GetChild(1).GetComponent<Image>();
+                foreach (var im in productSprites)
+                {
+                    if (im.name == product.GetComponent<Product>().Name)
+                    {
+                        image.sprite = im;
+                        print(product.name);
+                        print(im.name);
+                        break;
+                    }
+                }
                 GameObject productInfo = Instantiate(productInfoPrefab, productsContent.content);
+
                 var button = productInfo.GetComponent<Button>();
                 var texts = productInfo.GetComponentsInChildren<TMP_Text>();
                 button.onClick.AddListener(() => SelectProduct(product.GetComponent<Product>()));

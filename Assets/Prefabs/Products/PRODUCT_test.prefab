@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2849109422446361849}
   - component: {fileID: 5264436693181792071}
   - component: {fileID: 5247709714123109433}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: PRODUCT_test
   m_TagString: PickupLogic
   m_Icon: {fileID: 0}
@@ -61,9 +61,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -153,3 +150,6 @@ MonoBehaviour:
   sellPrice: 10
   buyPrice: 7
   defaultSellPrice: 10
+  defaultBuyPrice: 0
+  UnlockPrice: 0
+  isUnlocked: 0

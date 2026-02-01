@@ -16,6 +16,8 @@ public class buyProduct : MonoBehaviour
     public TMP_Text selectedProductPrice;
     public Transform productSpawn;
     int menuOpenClosed;
+    public Sprite blockedImage;
+
 
     void Update()
     {
@@ -36,19 +38,43 @@ public class buyProduct : MonoBehaviour
             foreach (var product in productPrefabs)
             {
                 var image = productInfoPrefab.transform.GetChild(1).GetComponent<Image>();
+                var state = productInfoPrefab.transform.GetChild(2).gameObject;
+                var text = state.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
                 foreach (var im in productSprites)
                 {
                     if (im.name == product.GetComponent<Product>().Name)
                     {
-                        image.sprite = im;
-                        print(product.name);
-                        print(im.name);
-                        break;
+                        if (product.GetComponent<Product>().isUnlocked == true)
+                        {
+                            image.sprite = im;
+                            print("1 " + product.GetComponent<Product>().Name);
+                            state.SetActive(false);
+                            break;
+                        }
+                        else
+                        {
+                            image.sprite = blockedImage;
+                            print("2 " + product.GetComponent<Product>().Name);
+
+                            state.SetActive(true);
+                            text.text = $"{product.GetComponent<Product>().UnlockPrice}";
+                            break;
+
+                        }
                     }
                 }
                 GameObject productInfo = Instantiate(productInfoPrefab, productsContent.content);
 
                 var button = productInfo.GetComponent<Button>();
+                if (product.GetComponent<Product>().isUnlocked)
+                {
+                    button.interactable = true;
+                }
+                else
+                {
+                    button.interactable = false;
+                }
                 var texts = productInfo.GetComponentsInChildren<TMP_Text>();
                 button.onClick.AddListener(() => SelectProduct(product.GetComponent<Product>()));
                 texts[0].text = product.GetComponent<Product>().Name;

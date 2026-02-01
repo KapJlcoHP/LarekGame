@@ -8,6 +8,8 @@ public class Product : MonoBehaviour
     public int buyPrice;
     public int defaultSellPrice;
     public int defaultBuyPrice;
+    public int UnlockPrice;
+    public bool isUnlocked = false;
 
     void FixedUpdate()
     {

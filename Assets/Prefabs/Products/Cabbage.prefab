@@ -104,7 +104,7 @@ MonoBehaviour:
   defaultSellPrice: 69
   defaultBuyPrice: 1
   UnlockPrice: 0
-  isUnlocked: 1
+  isUnlocked: 0
 --- !u!135 &229743621209500744
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -104,7 +104,7 @@ MonoBehaviour:
   defaultSellPrice: 37
   defaultBuyPrice: 1
   UnlockPrice: 0
-  isUnlocked: 1
+  isUnlocked: 0
 --- !u!54 &-263398826163468647
 Rigidbody:
   m_ObjectHideFlags: 0

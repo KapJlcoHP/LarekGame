@@ -17,6 +17,7 @@ public class buyProduct : MonoBehaviour
     public Transform productSpawn;
     int menuOpenClosed;
     public Sprite blockedImage;
+    public Button unLockButton;
 
 
     void Update()
@@ -27,7 +28,7 @@ public class buyProduct : MonoBehaviour
             MenuLogic();
         }
     }
-    void MenuLogic()
+    public void MenuLogic()
     {
         if (menuOpenClosed == 1)
         {
@@ -37,9 +38,16 @@ public class buyProduct : MonoBehaviour
                 Destroy(child.gameObject);
             foreach (var product in productPrefabs)
             {
-                var image = productInfoPrefab.transform.GetChild(1).GetComponent<Image>();
-                var state = productInfoPrefab.transform.GetChild(2).gameObject;
+
+               
+                GameObject productInfo = Instantiate(productInfoPrefab, productsContent.content);
+                Image image = productInfo.transform.GetChild(1).GetComponent<Image>();
+                GameObject state = productInfo.transform.GetChild(2).gameObject;
                 var text = state.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                var unblockButton = state.transform.GetChild(1).gameObject.GetComponent<Button>();
+                unblockButton.onClick.AddListener(() => OnUnlock(product.GetComponent<Product>(), state, image));
+                unLockButton = unblockButton;
+                Debug.Log(unblockButton);
 
                 foreach (var im in productSprites)
                 {
@@ -64,8 +72,6 @@ public class buyProduct : MonoBehaviour
                         }
                     }
                 }
-                GameObject productInfo = Instantiate(productInfoPrefab, productsContent.content);
-
                 var button = productInfo.GetComponent<Button>();
                 if (product.GetComponent<Product>().isUnlocked)
                 {
@@ -86,7 +92,7 @@ public class buyProduct : MonoBehaviour
             buyMenu.SetActive(false);
         }
     }
-    void SelectProduct(Product productData)
+    public void SelectProduct(Product productData)
     {
         selectedProduct = productData;
         selectedProductName.text = productData.Name;
@@ -100,6 +106,24 @@ public class buyProduct : MonoBehaviour
             {
                 Instantiate(selectedProduct.gameObject, productSpawn.position, productSpawn.rotation);
                 walletSystem.RemoveMoney(selectedProduct.buyPrice);
+            }
+        }
+    }
+    public void OnUnlock(Product product, GameObject sp, Image image)
+    {
+        print("OnUnlock");
+        if (walletSystem.wallet >= product.buyPrice)
+        {
+            walletSystem.wallet -= product.buyPrice;
+            product.isUnlocked = true;
+            sp.SetActive(false);
+            foreach (var sprite in productSprites)
+            {
+                if (product.Name == sprite.name)
+                {
+                    image.sprite = sprite;
+                    break;
+                }
             }
         }
     }

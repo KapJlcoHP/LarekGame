@@ -45,9 +45,8 @@ public class buyProduct : MonoBehaviour
                 GameObject state = productInfo.transform.GetChild(2).gameObject;
                 var text = state.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                 var unblockButton = state.transform.GetChild(1).gameObject.GetComponent<Button>();
-                unblockButton.onClick.AddListener(() => OnUnlock(product.GetComponent<Product>(), state, image));
-                unLockButton = unblockButton;
-                Debug.Log(unblockButton);
+                
+                
 
                 foreach (var im in productSprites)
                 {
@@ -56,23 +55,22 @@ public class buyProduct : MonoBehaviour
                         if (product.GetComponent<Product>().isUnlocked == true)
                         {
                             image.sprite = im;
-                            print("1 " + product.GetComponent<Product>().Name);
                             state.SetActive(false);
                             break;
                         }
                         else
                         {
                             image.sprite = blockedImage;
-                            print("2 " + product.GetComponent<Product>().Name);
 
                             state.SetActive(true);
-                            text.text = $"{product.GetComponent<Product>().UnlockPrice}";
+                            text.text = $"{product.GetComponent<Product>().unlockPrice}";
                             break;
 
                         }
                     }
                 }
                 var button = productInfo.GetComponent<Button>();
+                unblockButton.onClick.AddListener(() => OnUnlock(product.GetComponent<Product>(), state, image, button));
                 if (product.GetComponent<Product>().isUnlocked)
                 {
                     button.interactable = true;
@@ -109,13 +107,15 @@ public class buyProduct : MonoBehaviour
             }
         }
     }
-    public void OnUnlock(Product product, GameObject sp, Image image)
+    public void OnUnlock(Product product, GameObject sp, Image image,Button buyButton)
     {
         print("OnUnlock");
-        if (walletSystem.wallet >= product.buyPrice)
+        if (walletSystem.wallet >= product.unlockPrice)
         {
-            walletSystem.wallet -= product.buyPrice;
+            walletSystem.RemoveMoney(product.unlockPrice);
+
             product.isUnlocked = true;
+            buyButton.interactable = true;
             sp.SetActive(false);
             foreach (var sprite in productSprites)
             {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+
 public class WalletSystem : MonoBehaviour
 {
     public int wallet;

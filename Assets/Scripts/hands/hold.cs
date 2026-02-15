@@ -30,9 +30,8 @@ public class hold : MonoBehaviour
             isHolding = true;
             //hit.transform.GetChild(0).position = holdingObject.transform.position;
 
-                timeElapsed += Time.deltaTime;
-                float t = timeElapsed / lerpDuration;
-                hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, new Vector3(0,0,0), 0f);
+
+            hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, new Vector3(0,0,0), 0f);
             
             hitObject.transform.rotation = camPosition.rotation;
         }
@@ -42,9 +41,6 @@ public class hold : MonoBehaviour
 
             hitObject.transform.SetParent(null);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = false;
-
-
-
         }
 
     }

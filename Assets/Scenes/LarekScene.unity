@@ -989,11 +989,10 @@ Transform:
   m_GameObject: {fileID: 336163270}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2140002, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2035352419}
   - {fileID: 963194228}
   - {fileID: 21105807}
   m_Father: {fileID: 1598049802}
@@ -1378,7 +1377,7 @@ GameObject:
   - component: {fileID: 539655850}
   - component: {fileID: 539655849}
   - component: {fileID: 539655852}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SellTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2224,7 +2223,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.65700054, z: 0}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3079,6 +3078,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2035352419}
   - {fileID: 336163274}
   - {fileID: 1064146588}
   m_Father: {fileID: 0}
@@ -3291,7 +3291,7 @@ GameObject:
   - component: {fileID: 1737873154}
   - component: {fileID: 1737873153}
   - component: {fileID: 1737873156}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PrilavokTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3548,7 +3548,7 @@ GameObject:
   - component: {fileID: 1853825551}
   - component: {fileID: 1853825552}
   - component: {fileID: 1853825553}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: handsposition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3563,8 +3563,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853825549}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.39641598, z: -0, w: 0.9180711}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3577,13 +3577,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853825549}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c31ae501a5dccf849b12a0a885847c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {fileID: 963194228}
   idlePos: {fileID: 907641318}
+  lenght: 1
   Default:
     serializedVersion: 2
     m_Bits: 1
@@ -3600,7 +3601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camPosition: {fileID: 963194228}
-  hands: {fileID: 907641317}
+  hands: {fileID: 1853825549}
   pickable:
     serializedVersion: 2
     m_Bits: 8
@@ -3626,7 +3627,9 @@ LookAtConstraint:
   m_UseUpObject: 0
   m_Active: 1
   m_IsLocked: 1
-  m_Sources: []
+  m_Sources:
+  - sourceTransform: {fileID: 963194228}
+    weight: 1
 --- !u!1 &1921419746
 GameObject:
   m_ObjectHideFlags: 0
@@ -3671,7 +3674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2035352419}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3687,12 +3690,12 @@ Transform:
   m_GameObject: {fileID: 2035352418}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0.65700054, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1853825550}
-  m_Father: {fileID: 336163274}
+  m_Father: {fileID: 1598049802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2052698470
 GameObject:
@@ -3954,7 +3957,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -3962,7 +3965,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &3130279669792409836
@@ -3997,7 +4000,7 @@ BoxCollider:
     m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

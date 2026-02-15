@@ -4,13 +4,13 @@ public class handsPositionLogic : MonoBehaviour
 {
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private Transform idlePos;
-    private int lenght = 1;
+    [SerializeField] private float lenght = 1f;
     public LayerMask Default;
 
     void FixedUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, lenght, Default)) transform.position = hit.point;
+        if (Physics.Raycast(cameraPosition.position, cameraPosition.forward, out hit, 10, Default)) transform.position = hit.point + transform.forward * 0.3f;
         else transform.position = idlePos.position;
     }
 }

@@ -8,15 +8,19 @@ public class hold : MonoBehaviour
     public GameObject holdingObject;
     public bool isHolding;
     public float timeElapsed = 0;
-    public float lerpDuration = 0.1f;
+    public float lerpDuration = 3f;
     public bool isChild = false;
     GameObject hitObject;
+    bool pressed = false;
     void FixedUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(camPosition.position, camPosition.forward, out hit, 2f, pickable) && Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E)) { pressed = true; }
+        else { pressed = false; }
+        if ((Physics.Raycast(camPosition.position, camPosition.forward, out hit, 2f, pickable) && pressed) || (isHolding && pressed))
         {
-            //hit.transform.position = hands.transform.position;
+
+           // hit.transform.position = hands.transform.position;
             hitObject = hit.transform.gameObject;
             //Debug.Log(hitObject.name);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = true;
@@ -25,11 +29,11 @@ public class hold : MonoBehaviour
             //holdingObject = hit.transform.gameObject;
             isHolding = true;
             //hit.transform.GetChild(0).position = holdingObject.transform.position;
-            if (timeElapsed > lerpDuration) {
+
                 timeElapsed += Time.deltaTime;
                 float t = timeElapsed / lerpDuration;
-                hitObject.transform.position = Vector3.Lerp(hit.transform.position, hands.transform.position, t);
-        }
+                hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, new Vector3(0,0,0), 0f);
+            
             hitObject.transform.rotation = camPosition.rotation;
         }
         else if (isHolding)
@@ -38,9 +42,9 @@ public class hold : MonoBehaviour
 
             hitObject.transform.SetParent(null);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = false;
-            
 
-            
+
+
         }
 
     }

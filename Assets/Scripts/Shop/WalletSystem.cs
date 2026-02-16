@@ -24,4 +24,5 @@ public class WalletSystem : MonoBehaviour
         wallet -= money;
         walletUI.text = "Money: " + wallet.ToString();
     }
+
 }

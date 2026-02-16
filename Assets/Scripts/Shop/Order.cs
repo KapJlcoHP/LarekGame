@@ -28,11 +28,20 @@ public class Order : MonoBehaviour
         UpdateProducts();
         Debug.Log("Генерируется заказ!");
         order.Clear();
+        string maxProductToBuy = null;
         var uniqueProducts = products;
 
         if (uniqueProducts.Count > 0)
         {
             int itemsInOrder = Random.Range(1, 20);
+            
+            foreach(Product product in products)
+            {
+                if(playerWallet.wallet >= product.buyPrice)
+                {
+                    maxProductToBuy = product.Name;
+                }
+            }
             for (int i = 0; i < itemsInOrder; i++)
             {
                 Product randomProduct = uniqueProducts[Random.Range(0, uniqueProducts.Count)];
@@ -43,31 +52,31 @@ public class Order : MonoBehaviour
                         order[randomProduct.Name]++;
                     }
 
-                    else if (randomProduct.buyPrice < playerWallet.wallet)
+                    else if (randomProduct.buyPrice + ValuesSum() < playerWallet.wallet)
                     {
                         order.Add(randomProduct.Name, 1);
-                    }
-                    
+                    }     
                 }
             }
+           
         }
-        
+        if (order.Count == 0 && maxProductToBuy != null)
+        {
+
+            order.Add(maxProductToBuy, 1);
+        }
         UpdateOrderDisplay();
     }
-    public bool TryCompleteOrder(string productName)
+    public bool TryCompleteOrder()
     {
-
-        if (order.ContainsKey(productName) && order[productName] > 0)
+        if (order.Count == 0)
         {
-            order[productName]--;
-            if (order[productName] == 0)
-                order.Remove(productName);
             return true;
         }
         return false;
     }
 
-    private void UpdateOrderDisplay()
+    public void UpdateOrderDisplay()
     {
         Debug.Log("Обновляется текст!");
         orderText.text = "Order:\n";

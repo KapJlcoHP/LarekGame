@@ -1,41 +1,38 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 //комментарий для коммита
 public class SellTriggerHandler : MonoBehaviour
 {
     public Order orderSystem;
     public WalletSystem walletSystem;
-    public List<Product> productsInTrigger = new List<Product>();
+    
 
-    void TrySellProducts()
+    void TrySellProducts(Product product)
     {
-        for (int i = productsInTrigger.Count - 1; i >= 0; i--)
+        if (orderSystem.order[product.Name] > 1)
         {
-            Product product = productsInTrigger[i];
-            if (orderSystem.TryCompleteOrder(product.Name))
-            {
-                orderSystem.GenerateOrder();
-                walletSystem.AddMoney(product.sellPrice);
-                productsInTrigger.RemoveAt(i);
-                Destroy(product.gameObject);
-            }
+            orderSystem.order[product.Name]--;
+            walletSystem.AddMoney(product.sellPrice);
+            orderSystem.UpdateOrderDisplay();
+            Destroy(product.gameObject);
         }
+        else {
+            walletSystem.AddMoney(product.sellPrice);
+            orderSystem.order[product.Name]--;
+            orderSystem.order.Remove(product.Name);
+            orderSystem.UpdateOrderDisplay();
+            Destroy(product.gameObject);
+        }
+        if (orderSystem.TryCompleteOrder()) { orderSystem.GenerateOrder(); }
     }
     void OnTriggerEnter(Collider other)
     {
         Product product = other.GetComponent<Product>();
-        if (product != null && !productsInTrigger.Contains(product))
+
+        if (product != null && orderSystem.order.ContainsKey(product.Name))
         {
-            productsInTrigger.Add(product);
-            TrySellProducts();
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        Product product = other.GetComponent<Product>();
-        if (product != null)
-        {
-            productsInTrigger.Remove(product);
+            TrySellProducts(other.GetComponent<Product>());
         }
     }
 }

@@ -14,6 +14,7 @@ public class SellTriggerHandler : MonoBehaviour
             Product product = productsInTrigger[i];
             if (orderSystem.TryCompleteOrder(product.Name))
             {
+                orderSystem.GenerateOrder();
                 walletSystem.AddMoney(product.sellPrice);
                 productsInTrigger.RemoveAt(i);
                 Destroy(product.gameObject);

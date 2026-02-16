@@ -3,7 +3,7 @@ using UnityEngine;
 public class PrilavokTriggerHandler : MonoBehaviour
 {
     public Order orderSystem;
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Product>())
         {
@@ -16,5 +16,5 @@ public class PrilavokTriggerHandler : MonoBehaviour
         {
             orderSystem.products.Remove(other.gameObject.GetComponent<Product>());
         }
-    }
+    }*/
 }

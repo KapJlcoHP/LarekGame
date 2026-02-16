@@ -18,7 +18,7 @@ public class buyProduct : MonoBehaviour
     int menuOpenClosed;
     public Sprite blockedImage;
     public Button unLockButton;
-
+    public Order orderSystem;
 
     void Update()
     {
@@ -125,6 +125,7 @@ public class buyProduct : MonoBehaviour
                     break;
                 }
             }
+            orderSystem.UpdateProducts();
         }
     }
 }

@@ -105,12 +105,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Cabbage
-  sellPrice: 69
-  buyPrice: 1
+  sellPrice: 10
+  buyPrice: 7
   defaultSellPrice: 69
   defaultBuyPrice: 1
   unlockPrice: 1000
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!135 &229743621209500744
 SphereCollider:
   m_ObjectHideFlags: 0

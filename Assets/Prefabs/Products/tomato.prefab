@@ -106,12 +106,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: tomato
-  sellPrice: 21
-  buyPrice: 1
+  sellPrice: 750
+  buyPrice: 500
   defaultSellPrice: 21
   defaultBuyPrice: 1
-  UnlockPrice: 0
-  isUnlocked: 1
+  unlockPrice: 1000
+  isUnlocked: 0
 --- !u!54 &1282964754356830072
 Rigidbody:
   m_ObjectHideFlags: 0

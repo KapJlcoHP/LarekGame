@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: -8.95}
-  m_LocalScale: {x: 46.65347, y: 46.65347, z: 42.357178}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 9.079105}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   defaultSellPrice: 21
   defaultBuyPrice: 1
   unlockPrice: 1000
-  isUnlocked: 0
+  isUnlocked: 1
 --- !u!54 &1282964754356830072
 Rigidbody:
   m_ObjectHideFlags: 0

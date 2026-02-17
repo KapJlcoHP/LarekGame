@@ -24,6 +24,7 @@ public class hold : MonoBehaviour
             hitObject = hit.transform.gameObject;
             //Debug.Log(hitObject.name);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = true;
+            hitObject.transform.GetComponent<Rigidbody>().useGravity = false;
             hitObject.transform.SetParent(hands.transform);
 
             //holdingObject = hit.transform.gameObject;
@@ -31,9 +32,9 @@ public class hold : MonoBehaviour
             //hit.transform.GetChild(0).position = holdingObject.transform.position;
 
 
-            hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, new Vector3(0,0,0), 0f);
-            
-            hitObject.transform.rotation = camPosition.rotation;
+            hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, hands.transform.position, 0f);
+
+            hitObject.transform.rotation = hands.transform.rotation;
         }
         else if (isHolding)
         {
@@ -41,6 +42,7 @@ public class hold : MonoBehaviour
 
             hitObject.transform.SetParent(null);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = false;
+            hitObject.transform.GetComponent<Rigidbody>().useGravity = true;
         }
 
     }

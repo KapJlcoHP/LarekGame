@@ -17,29 +17,19 @@ public class hold : MonoBehaviour
         RaycastHit hit;
         if (Input.GetKey(KeyCode.E)) { pressed = true; }
         else { pressed = false; }
-        if ((Physics.Raycast(camPosition.position, camPosition.forward, out hit, 2f, pickable) && pressed) || (isHolding && pressed))
+        if (((Physics.Raycast(camPosition.position, camPosition.forward, out hit, 2f, pickable) && pressed && hit.transform != null && hands.transform.childCount <= 1) || (isHolding && pressed && hands.transform.childCount <= 1)) )
         {
-
-           // hit.transform.position = hands.transform.position;
             hitObject = hit.transform.gameObject;
-            //Debug.Log(hitObject.name);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = true;
             hitObject.transform.GetComponent<Rigidbody>().useGravity = false;
             hitObject.transform.SetParent(hands.transform);
-
-            //holdingObject = hit.transform.gameObject;
             isHolding = true;
-            //hit.transform.GetChild(0).position = holdingObject.transform.position;
-
-
             hitObject.transform.position = Vector3.Lerp(hitObject.transform.position, hands.transform.position, 0f);
-
             hitObject.transform.rotation = hands.transform.rotation;
         }
         else if (isHolding)
         {
             isHolding = false;
-
             hitObject.transform.SetParent(null);
             hitObject.transform.GetComponent<Rigidbody>().isKinematic = false;
             hitObject.transform.GetComponent<Rigidbody>().useGravity = true;

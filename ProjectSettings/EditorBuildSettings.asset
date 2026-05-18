@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/_Project/Scenes/MainMenu.unity
     guid: c9303c7e1f8fc1f42a341368bba2b7e7
   - enabled: 1
-    path: Assets/Scenes/LarekScene.unity
+    path: Assets/_Project/Scenes/LarekScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 288fb46b2e4edf5499f44b18472c246d, type: 2}

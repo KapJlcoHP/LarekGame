@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: LarekAssets
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: LarekAssets
+  m_GUID: cfb865870aa452144b72f8c1c736dc5b
+  m_SerializeEntries:
+  - m_GUID: 6a32c0fa2a0dab5409f1eb166b96f878
+    m_Address: Assets/_Project/ItemsSO/Cabbage.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8cffda8116a1fd4abb38108086897b8
+    m_Address: Assets/_Project/ItemsSO/Tomato.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7bfdc26e12d5a324eb38f501c3d930da, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3755e5d0c008df245a07e8f1e9fd3a87, type: 2}
+    - {fileID: 11400000, guid: e014966ebf0e7374bba5858a3baa2edd, type: 2}

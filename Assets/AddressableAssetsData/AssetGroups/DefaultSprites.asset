@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DefaultSprites
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: DefaultSprites
+  m_GUID: f3819eb1f35b5e943a051c82e441b320
+  m_SerializeEntries:
+  - m_GUID: 89730d5ac9decb84d811b7331f933d81
+    m_Address: Assets/_Project/UI/Cucumber.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ac81503b4fe2a0439bf3946ea8ce550
+    m_Address: Assets/_Project/UI/skychni ogyrek.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8e3f7d5130c12947971b06e2b5f4802
+    m_Address: Assets/_Project/UI/Cabbage.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e20d112619190dd40901176e26d14dae
+    m_Address: Assets/_Project/UI/Carrot.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e60d52b94023da34b89dc12c63106548
+    m_Address: Assets/_Project/UI/Potato.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2b8bad36ca515041aedf10d6601f100
+    m_Address: Assets/_Project/UI/red-paper-background-elegant-scarlet-background-holiday-decoration-web-design-paper-texture.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3f3545290089cd499079a7f08c6988c
+    m_Address: Assets/_Project/UI/tomato.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7bfdc26e12d5a324eb38f501c3d930da, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 49470509a0ab64a43abbb4b789a8cabb, type: 2}
+    - {fileID: 11400000, guid: 6642753863a7bcd4995f9dcd0c8ef0e5, type: 2}

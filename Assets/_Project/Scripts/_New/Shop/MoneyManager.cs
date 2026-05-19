@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoneyManager : MonoBehaviour
+public class MoneyManager
 {
     private int money = 0;
     public Text moneyText;

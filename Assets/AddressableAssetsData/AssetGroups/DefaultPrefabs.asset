@@ -33,6 +33,16 @@ MonoBehaviour:
     m_SerializedLabels:
     - FirstLevel
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5deae04e9d457d1429475ef37c0dc528
+    m_Address: Assets/_Project/Prefabs/SceneSO/Environment.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a10ae8994242eca459358d04f2544e3e
+    m_Address: Assets/_Project/Prefabs/Player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a517d55b8fcc1f14fac83dfc596e42db
     m_Address: Potato
     m_ReadOnly: 0

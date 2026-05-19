@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -6,38 +7,37 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class SceneBootstrap : MonoBehaviour
 {
-    private ProductManager prodManager;
-    private MoneyManager moneyManager;
-    private AsyncOperationHandle<ProductDatabase> dbHandle;
-
+    private GameServices gameServices;
     async void Start()
     {
+        GameObject mainService = new GameObject("GameServices");
+        //Instantiate(mainService);
+        DontDestroyOnLoad(mainService);
+        mainService.AddComponent<GameServices>();
+        gameServices = mainService.GetComponent<GameServices>();
+        gameServices.productManager = new ProductManager();
+        gameServices.moneyManager = new MoneyManager();
+        gameServices.playerManager = new PlayerManager();
         await InitProductManager("Assets/_Project/ItemsSO/FirstLevel.asset");
         await InitMoneyManager();
-       // await LoadMainMenu();
+        await InitScene("Assets/_Project/Prefabs/SceneSO/Level0.asset");
+        // await LoadMainMenu();
+        Destroy(gameObject);
 
     }
 
     async Task InitProductManager(string key)
     {
-        if (FindFirstObjectByType<ProductManager>() == null)
-        {
-            var go = new GameObject("ProductManager");
-            DontDestroyOnLoad(go);
-            prodManager = go.AddComponent<ProductManager>();
-        }
-        else
-        {
-            prodManager = FindFirstObjectByType<ProductManager>();
-        }
-
-        dbHandle = Addressables.LoadAssetAsync<ProductDatabase>(key);
+        var dbHandle = Addressables.LoadAssetAsync<ProductDatabase>(key);
         await dbHandle.Task;
-
         if (dbHandle.Status == AsyncOperationStatus.Succeeded)
-            prodManager.AddCatalog(dbHandle.Result);
+        {
+            await gameServices.productManager.AddCatalog(dbHandle.Result);
+            Addressables.Release(dbHandle);
+        }
         else
             Debug.LogError("Не удалось загрузить БД");
+ 
     }
 
     /*async Task LoadMainMenu()
@@ -50,24 +50,33 @@ public class SceneBootstrap : MonoBehaviour
             //menuObj.GetComponent<MainMenuUI>().Init(prodManager);
         }
     }*/
-    async Task InitMoneyManager()
+    async Task InitScene(string key)
     {
-        
-        if (FindFirstObjectByType<MoneyManager>() == null)
+        var levelHandle = Addressables.LoadAssetAsync<ScenePrefab>(key);
+        await levelHandle.Task;
+        if(levelHandle.Status == AsyncOperationStatus.Succeeded)
         {
-            var go = new GameObject("MoneyManager");
-            DontDestroyOnLoad(go);
-            moneyManager = go.AddComponent<MoneyManager>();
+            var sceneData = levelHandle.Result;
+            var envHandle = sceneData.scenePref.LoadAssetAsync();
+            await envHandle.Task;
+            var env = Instantiate(envHandle.Result);
+            Addressables.Release(envHandle);
+            var playerHandle = sceneData.playerPref.LoadAssetAsync();
+            await playerHandle.Task;
+            var player = Instantiate(playerHandle.Result, env.transform);
+            Addressables.Release(playerHandle);
+            player.transform.localPosition = sceneData.playerPos;
+            //gameServices.playerManager.SetPlayer(player);
         }
         else
         {
-            moneyManager = FindFirstObjectByType<MoneyManager>();
+            Debug.LogError("Не удалось загрузить сцену");
         }
-        moneyManager.SetMoney(1000);
+        Addressables.Release(levelHandle);
     }
-    void OnDestroy()
+    Task InitMoneyManager()
     {
-        if (dbHandle.IsValid())
-            Addressables.Release(dbHandle);
+        gameServices.moneyManager.SetMoney(1000);
+        return Task.CompletedTask;
     }
 }

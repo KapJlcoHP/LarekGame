@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: LarekAssets
   m_GUID: cfb865870aa452144b72f8c1c736dc5b
   m_SerializeEntries:
+  - m_GUID: 17ea4f1d12c12864291a0f9f870fbceb
+    m_Address: Assets/_Project/Prefabs/SceneSO/Level0.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a32c0fa2a0dab5409f1eb166b96f878
     m_Address: Assets/_Project/ItemsSO/Cabbage.asset
     m_ReadOnly: 0

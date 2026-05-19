@@ -1,8 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class ProductManager : MonoBehaviour
+public class ProductManager
 {
     public List<ProductData> AllProducts = new List<ProductData>();//public List<ProductData> AllProducts { get; private set; } = new List<ProductData>();
     private Dictionary<ProductData, bool> unlockedState = new Dictionary<ProductData, bool>();
@@ -11,7 +13,7 @@ public class ProductManager : MonoBehaviour
     public event Action<ProductData> OnProductUnlocked;
 
     // Загрузка каталога и добавление предметов
-    public void AddCatalog(ProductDatabase catalog)
+    public Task AddCatalog(ProductDatabase catalog)
     {
         foreach (var product in catalog.allItems)
         {
@@ -22,6 +24,7 @@ public class ProductManager : MonoBehaviour
             }
         }
         OnProductsLoaded?.Invoke();
+        return Task.CompletedTask;
     }
 
     public bool IsUnlocked(ProductData product) => unlockedState.TryGetValue(product, out var val) && val;

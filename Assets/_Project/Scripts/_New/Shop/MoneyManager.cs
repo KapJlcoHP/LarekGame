@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public class MoneyManager
 {
     private int money = 0;
     public Text moneyText;
+    public event Action<int> OnMoneyChanged;
     public void AddMoney(int amount)
     {
         money += amount;
@@ -33,9 +34,13 @@ public class MoneyManager
     }
     public void UpdateMoneyUI()
     {
+        OnMoneyChanged?.Invoke(money);
         if (moneyText != null)
             moneyText.text = $"Money: {money}";
     }
-    
+    public int Balance()
+    {
+        return money;
+    }
 
 }

@@ -39,7 +39,7 @@ public class Order : MonoBehaviour
             {
                 if(playerWallet.wallet >= product.buyPrice)
                 {
-                    maxProductToBuy = product.Name;
+                    //maxProductToBuy = product.itemName;
                 }
             }
             for (int i = 0; i < itemsInOrder; i++)

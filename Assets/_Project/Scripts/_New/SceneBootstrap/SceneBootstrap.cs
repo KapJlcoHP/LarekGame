@@ -10,24 +10,34 @@ public class SceneBootstrap : MonoBehaviour
     private GameServices gameServices;
     async void Start()
     {
-        GameObject mainService = new GameObject("GameServices");
-        //Instantiate(mainService);
-        DontDestroyOnLoad(mainService);
-        mainService.AddComponent<GameServices>();
-        gameServices = mainService.GetComponent<GameServices>();
-        gameServices.productManager = new ProductManager();
-        gameServices.moneyManager = new MoneyManager();
-        gameServices.playerManager = new PlayerManager();
+        await InitGameServices();
+        //gameServices.playerManager = new PlayerManager(); //Надо вынести скрипт создания менеджера и переместить туда спавн игрока и остальную логику
         await InitProductManager("Assets/_Project/ItemsSO/FirstLevel.asset");
         await InitMoneyManager();
+        await InitOrderManager();
         await InitScene("Assets/_Project/Prefabs/SceneSO/Level0.asset");
         // await LoadMainMenu();
         Destroy(gameObject);
-
     }
-
+    async Task InitOrderManager()
+    {
+        gameServices.orderManager = new OrderManager();
+        gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
+        gameServices.orderManager.SetProductManager(gameServices.productManager);
+        gameServices.orderManager.GenerateOrder();
+        await Task.CompletedTask;
+    }
+    async Task InitGameServices()
+    {
+        GameObject mainService = new GameObject("GameServices");
+        DontDestroyOnLoad(mainService);
+        mainService.AddComponent<GameServices>();
+        gameServices = mainService.GetComponent<GameServices>();
+        await Task.CompletedTask;
+    }
     async Task InitProductManager(string key)
     {
+        gameServices.productManager = new ProductManager();
         var dbHandle = Addressables.LoadAssetAsync<ProductDatabase>(key);
         await dbHandle.Task;
         if (dbHandle.Status == AsyncOperationStatus.Succeeded)
@@ -74,9 +84,10 @@ public class SceneBootstrap : MonoBehaviour
         }
         Addressables.Release(levelHandle);
     }
-    Task InitMoneyManager()
+    async Task InitMoneyManager()
     {
+        gameServices.moneyManager = new MoneyManager();
         gameServices.moneyManager.SetMoney(1000);
-        return Task.CompletedTask;
+        await Task.CompletedTask;
     }
 }

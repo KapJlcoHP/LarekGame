@@ -34,4 +34,5 @@ public class ProductManager
         unlockedState[product] = true;
         OnProductUnlocked?.Invoke(product);
     }
+
 }

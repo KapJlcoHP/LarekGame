@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class MoneyManager
+public class MoneyManager : ISaveable<MoneySaveData>
 {
     private int money = 0;
     public Text moneyText;
@@ -42,5 +42,19 @@ public class MoneyManager
     {
         return money;
     }
+    public MoneySaveData GetSaveData()
+    {
+        return new MoneySaveData { money = money };
+    }
 
+    public void LoadSaveData(MoneySaveData data)
+    {
+        money = data.money;
+
+    }
+}
+[System.Serializable]
+public class MoneySaveData
+{
+    public int money;
 }

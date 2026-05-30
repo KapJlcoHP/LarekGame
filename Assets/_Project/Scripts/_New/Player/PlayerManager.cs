@@ -1,16 +1,17 @@
+using NUnit;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using System.Threading.Tasks;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+     public async Task SpawnPlayer(ScenePrefab sceneData)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var playerHandle = sceneData.playerPref.LoadAssetAsync();
+        await playerHandle.Task;
+        var player = Instantiate(playerHandle.Result, Vector3.zero, new Quaternion(0,0,0,0));
+        Addressables.Release(playerHandle);
+        player.transform.localPosition = sceneData.playerPos;
+        await Task.CompletedTask;
     }
 }

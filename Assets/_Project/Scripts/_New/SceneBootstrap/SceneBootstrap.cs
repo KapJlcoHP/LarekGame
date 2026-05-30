@@ -1,32 +1,58 @@
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class SceneBootstrap : MonoBehaviour
 {
     private GameServices gameServices;
+    private SaveManager saveManager;
+
     async void Start()
     {
+        // 1. Создаём GameServices
         await InitGameServices();
-        //gameServices.playerManager = new PlayerManager(); //Надо вынести скрипт создания менеджера и переместить туда спавн игрока и остальную логику
-        await InitProductManager("Assets/_Project/ItemsSO/FirstLevel.asset");
-        await InitMoneyManager();
-        await InitOrderManager();
+
+        // 2. Создаём пустые менеджеры (без начальных значений)
+        CreateManagers();
+
+        // 3. Создаём SaveManager и подписываемся на события
+        saveManager = new SaveManager();
+        saveManager.Initialize(
+            gameServices.moneyManager,
+            gameServices.productManager,
+            gameServices.orderManager,
+            gameServices.moneyManager,
+            gameServices.productManager,
+            gameServices.orderManager
+        );
+
+        // 4. Загружаем сохранение (или значения по умолчанию)
+        GameSaveData loadedData = saveManager.Load();
+
+        // 5. Применяем деньги сразу (не зависит от каталога)
+        gameServices.moneyManager.LoadSaveData(loadedData.moneyData);
+
+        // 6. Загружаем каталог продуктов
+        await LoadProductCatalog("Assets/_Project/ItemsSO/FirstLevel.asset");
+
+        // 7. Применяем разблокировки (теперь каталог загружен)
+        gameServices.productManager.LoadSaveData(loadedData.productData);
+
+        // 8. Восстанавливаем или генерируем заказ
+        if (loadedData.orderData.productIds.Length > 0)
+            gameServices.orderManager.LoadSaveData(loadedData.orderData);
+        else
+            gameServices.orderManager.GenerateOrder();  // вызовет событие -> сохранится
+
+        // 9. Загружаем сцену (окружение + игрок)
         await InitScene("Assets/_Project/Prefabs/SceneSO/Level0.asset");
-        // await LoadMainMenu();
+
+        // 10. Этот Bootstrap больше не нужен
         Destroy(gameObject);
     }
-    async Task InitOrderManager()
-    {
-        gameServices.orderManager = new OrderManager();
-        gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
-        gameServices.orderManager.SetProductManager(gameServices.productManager);
-        gameServices.orderManager.GenerateOrder();
-        await Task.CompletedTask;
-    }
+
+    // Создание контейнера GameServices
     async Task InitGameServices()
     {
         GameObject mainService = new GameObject("GameServices");
@@ -35,9 +61,20 @@ public class SceneBootstrap : MonoBehaviour
         gameServices = mainService.GetComponent<GameServices>();
         await Task.CompletedTask;
     }
-    async Task InitProductManager(string key)
+
+    // Создание экземпляров менеджеров (пока без данных)
+    void CreateManagers()
     {
+        gameServices.moneyManager = new MoneyManager();
         gameServices.productManager = new ProductManager();
+        gameServices.orderManager = new OrderManager();
+        gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
+        gameServices.orderManager.SetProductManager(gameServices.productManager);
+    }
+
+    // Загрузка каталога продуктов через Addressables
+    async Task LoadProductCatalog(string key)
+    {
         var dbHandle = Addressables.LoadAssetAsync<ProductDatabase>(key);
         await dbHandle.Task;
         if (dbHandle.Status == AsyncOperationStatus.Succeeded)
@@ -46,37 +83,27 @@ public class SceneBootstrap : MonoBehaviour
             Addressables.Release(dbHandle);
         }
         else
-            Debug.LogError("Не удалось загрузить БД");
- 
+        {
+            Debug.LogError("Не удалось загрузить БД продуктов");
+        }
     }
 
-    /*async Task LoadMainMenu()
-    {
-        var handle = Addressables.LoadAssetAsync<GameObject>("ui/main_menu");
-        await handle.Task;
-        if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-            var menuObj = Instantiate(handle.Result);
-            //menuObj.GetComponent<MainMenuUI>().Init(prodManager);
-        }
-    }*/
+    // Загрузка сцены уровня (окружение + игрок)
     async Task InitScene(string key)
     {
         var levelHandle = Addressables.LoadAssetAsync<ScenePrefab>(key);
         await levelHandle.Task;
-        if(levelHandle.Status == AsyncOperationStatus.Succeeded)
+        if (levelHandle.Status == AsyncOperationStatus.Succeeded)
         {
             var sceneData = levelHandle.Result;
             var envHandle = sceneData.scenePref.LoadAssetAsync();
             await envHandle.Task;
-            var env = Instantiate(envHandle.Result);
+            Instantiate(envHandle.Result);
             Addressables.Release(envHandle);
-            var playerHandle = sceneData.playerPref.LoadAssetAsync();
-            await playerHandle.Task;
-            var player = Instantiate(playerHandle.Result, env.transform);
-            Addressables.Release(playerHandle);
-            player.transform.localPosition = sceneData.playerPos;
-            //gameServices.playerManager.SetPlayer(player);
+
+            // Игрок
+            await InitPlayerManager();
+            await gameServices.playerManager.SpawnPlayer(sceneData);
         }
         else
         {
@@ -84,10 +111,12 @@ public class SceneBootstrap : MonoBehaviour
         }
         Addressables.Release(levelHandle);
     }
-    async Task InitMoneyManager()
+
+    // Создание PlayerManager (он MonoBehaviour, должен быть на GameServices)
+    async Task InitPlayerManager()
     {
-        gameServices.moneyManager = new MoneyManager();
-        gameServices.moneyManager.SetMoney(1000);
+        gameServices.gameObject.AddComponent<PlayerManager>();
+        gameServices.playerManager = gameServices.gameObject.GetComponent<PlayerManager>();
         await Task.CompletedTask;
     }
 }

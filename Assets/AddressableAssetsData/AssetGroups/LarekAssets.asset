@@ -23,7 +23,8 @@ MonoBehaviour:
   - m_GUID: 6a32c0fa2a0dab5409f1eb166b96f878
     m_Address: Assets/_Project/ItemsSO/Cabbage.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - FirstLevel
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8cffda8116a1fd4abb38108086897b8
     m_Address: Assets/_Project/ItemsSO/Tomato.asset

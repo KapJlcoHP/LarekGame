@@ -8,7 +8,7 @@ public class mouse_look : MonoBehaviour
     float yRotation;
 
     public float mouseSens = 90f;
-    private void Awake()
+    /*private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -26,5 +26,5 @@ public class mouse_look : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-    }
+    }*/
 }

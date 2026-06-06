@@ -13,17 +13,19 @@ public class MoneyManager : ISaveable<MoneySaveData>
         Debug.Log($"Added {amount} money. Total: {money}");
         UpdateMoneyUI();
     }
-    public void SpendMoney(int amount)
+    public bool SpendMoney(int amount)
     {
         if (money >= amount)
         {
             money -= amount;
             Debug.Log($"Spent {amount} money. Total: {money}");
             UpdateMoneyUI();
+            return true;
         }
         else
         {
             Debug.LogWarning("Not enough money to spend!");
+            return false;
         }
     }
     public void SetMoney(int amount)

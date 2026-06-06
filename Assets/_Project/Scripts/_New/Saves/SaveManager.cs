@@ -9,7 +9,7 @@ public class SaveManager
     private ISaveable<ProductSaveData> productSaveable;
     private ISaveable<OrderSaveData> orderSaveable;
 
-    // Получаем менеджеры как интерфейсы + подписываемся на события
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public void Initialize(
         ISaveable<MoneySaveData> money,
         ISaveable<ProductSaveData> product,
@@ -18,13 +18,18 @@ public class SaveManager
         ProductManager pm,
         OrderManager om)
     {
+        // Р”РѕР±Р°РІР»СЏРµРј РїСЂРѕРІРµСЂРєРё РЅР° null
+        if (mm == null) throw new System.ArgumentNullException(nameof(mm), "MoneyManager СЂР°РІРµРЅ null!");
+        if (pm == null) throw new System.ArgumentNullException(nameof(pm), "ProductManager СЂР°РІРµРЅ null!");
+        if (om == null) throw new System.ArgumentNullException(nameof(om), "OrderManager СЂР°РІРµРЅ null!");
+
         moneySaveable = money;
         productSaveable = product;
         orderSaveable = order;
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
-        Debug.Log("Путь к сохранению: " + savePath);
+        Debug.Log("РџСѓС‚СЊ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ: " + savePath);
 
-        // Подписываемся на события для автоматического сохранения
+        // РџРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РЅР° СЃРѕР±С‹С‚РёСЏ РґР»СЏ Р°РІС‚РѕСЃРѕС…СЂР°РЅРµРЅРёСЏ РїСЂРё РёР·РјРµРЅРµРЅРёСЏС…
         mm.OnMoneyChanged += OnChanged;
         pm.OnProductUnlocked += OnChanged;
         om.OnOrderGenerated += OnChanged;
@@ -37,7 +42,7 @@ public class SaveManager
             string json = File.ReadAllText(savePath);
             return JsonUtility.FromJson<GameSaveData>(json);
         }
-        // Значения по умолчанию
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         return new GameSaveData
         {
             moneyData = new MoneySaveData { money = 1000 },
@@ -58,15 +63,15 @@ public class SaveManager
         File.WriteAllText(savePath, json);
     }
 
-    // Общий обработчик событий
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnChanged<T>(T arg) => Save();
 
-    // Варианты для событий с параметрами
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnMoneyChanged(int money) => Save();
     private void OnProductUnlocked(ProductData p) => Save();
     private void OnOrderGenerated(List<ProductData> orders) => Save();
 
-    // Отписка (если нужно)
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
     public void Cleanup(MoneyManager mm, ProductManager pm, OrderManager om)
     {
         mm.OnMoneyChanged -= OnMoneyChanged;

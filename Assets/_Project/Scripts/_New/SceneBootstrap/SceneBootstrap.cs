@@ -7,16 +7,16 @@ public class SceneBootstrap : MonoBehaviour
 {
     private GameServices gameServices;
     private SaveManager saveManager;
-
+    [SerializeField] private UIRoot uiRoot;
     async void Start()
     {
-        // 1. Создаём GameServices
+        // 1. пїЅпїЅпїЅпїЅпїЅпїЅ GameServices
         await InitGameServices();
 
-        // 2. Создаём пустые менеджеры (без начальных значений)
+        // 2. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         CreateManagers();
 
-        // 3. Создаём SaveManager и подписываемся на события
+        // 3. пїЅпїЅпїЅпїЅпїЅпїЅ SaveManager пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         saveManager = new SaveManager();
         saveManager.Initialize(
             gameServices.moneyManager,
@@ -27,32 +27,32 @@ public class SceneBootstrap : MonoBehaviour
             gameServices.orderManager
         );
 
-        // 4. Загружаем сохранение (или значения по умолчанию)
+        // 4. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         GameSaveData loadedData = saveManager.Load();
 
-        // 5. Применяем деньги сразу (не зависит от каталога)
+        // 5. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         gameServices.moneyManager.LoadSaveData(loadedData.moneyData);
 
-        // 6. Загружаем каталог продуктов
+        // 6. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         await LoadProductCatalog("Assets/_Project/ItemsSO/FirstLevel.asset");
 
-        // 7. Применяем разблокировки (теперь каталог загружен)
+        // 7. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         gameServices.productManager.LoadSaveData(loadedData.productData);
 
-        // 8. Восстанавливаем или генерируем заказ
+        // 8. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (loadedData.orderData.productIds.Length > 0)
             gameServices.orderManager.LoadSaveData(loadedData.orderData);
         else
-            gameServices.orderManager.GenerateOrder();  // вызовет событие -> сохранится
+            gameServices.orderManager.GenerateOrder();  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ -> пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        // 9. Загружаем сцену (окружение + игрок)
+        // 9. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅ)
         await InitScene("Assets/_Project/Prefabs/SceneSO/Level0.asset");
-
-        // 10. Этот Bootstrap больше не нужен
+        uiRoot.Initialize(gameServices);
+        // 10. пїЅпїЅпїЅпїЅ Bootstrap пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         Destroy(gameObject);
     }
 
-    // Создание контейнера GameServices
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ GameServices
     async Task InitGameServices()
     {
         GameObject mainService = new GameObject("GameServices");
@@ -62,17 +62,25 @@ public class SceneBootstrap : MonoBehaviour
         await Task.CompletedTask;
     }
 
-    // Создание экземпляров менеджеров (пока без данных)
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
     void CreateManagers()
     {
-        gameServices.moneyManager = new MoneyManager();
-        gameServices.productManager = new ProductManager();
-        gameServices.orderManager = new OrderManager();
-        gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
-        gameServices.orderManager.SetProductManager(gameServices.productManager);
+        void CreateManagers()
+        {
+            gameServices.moneyManager = new MoneyManager();
+            gameServices.productManager = new ProductManager();
+            gameServices.orderManager = new OrderManager();
+            gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
+            gameServices.orderManager.SetProductManager(gameServices.productManager);
+            gameServices.cartManager = new CartManager(gameServices.moneyManager);
+            gameServices.shopManager = new ShopManager(
+                gameServices.productManager, 
+                gameServices.moneyManager
+            );
+        }
     }
 
-    // Загрузка каталога продуктов через Addressables
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ Addressables
     async Task LoadProductCatalog(string key)
     {
         var dbHandle = Addressables.LoadAssetAsync<ProductDatabase>(key);
@@ -84,11 +92,11 @@ public class SceneBootstrap : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Не удалось загрузить БД продуктов");
+            Debug.LogError("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         }
     }
 
-    // Загрузка сцены уровня (окружение + игрок)
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅ)
     async Task InitScene(string key)
     {
         var levelHandle = Addressables.LoadAssetAsync<ScenePrefab>(key);
@@ -101,18 +109,18 @@ public class SceneBootstrap : MonoBehaviour
             Instantiate(envHandle.Result);
             Addressables.Release(envHandle);
 
-            // Игрок
+            // пїЅпїЅпїЅпїЅпїЅ
             await InitPlayerManager();
             await gameServices.playerManager.SpawnPlayer(sceneData);
         }
         else
         {
-            Debug.LogError("Не удалось загрузить сцену");
+            Debug.LogError("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
         }
         Addressables.Release(levelHandle);
     }
 
-    // Создание PlayerManager (он MonoBehaviour, должен быть на GameServices)
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PlayerManager (пїЅпїЅ MonoBehaviour, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ GameServices)
     async Task InitPlayerManager()
     {
         gameServices.gameObject.AddComponent<PlayerManager>();

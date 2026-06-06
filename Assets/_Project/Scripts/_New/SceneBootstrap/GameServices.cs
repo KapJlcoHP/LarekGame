@@ -1,5 +1,5 @@
 using UnityEngine;
-// Это скрипт, который будет находится в статусе DontDestroyOnLoad в сцене и содержать всю необходимую информацию для игры
+// пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ DontDestroyOnLoad пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 public class GameServices : MonoBehaviour
 {
     public SaveManager saveManager { get; set; }
@@ -7,4 +7,6 @@ public class GameServices : MonoBehaviour
     public PlayerManager playerManager { get; set; }
     public MoneyManager moneyManager { get; set; }
     public ProductManager productManager { get; set; }
+    public ShopManager shopManager{ get; set; }
+    public CartManager cartManager { get; set; }
 }

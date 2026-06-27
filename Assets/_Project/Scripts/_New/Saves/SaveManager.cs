@@ -30,9 +30,9 @@ public class SaveManager
         Debug.Log("Путь для сохранения: " + savePath);
 
         // Подписываемся на события для автосохранения при изменениях
-        mm.OnMoneyChanged += OnChanged;
-        pm.OnProductUnlocked += OnChanged;
-        om.OnOrderGenerated += OnChanged;
+        mm.OnMoneyChanged += OnMoneyChanged;
+        pm.OnProductUnlocked += OnProductUnlocked;
+        om.OnOrderGenerated += OnOrderGenerated;
     }
 
     public GameSaveData Load()
@@ -63,10 +63,6 @@ public class SaveManager
         File.WriteAllText(savePath, json);
     }
 
-    // ����� ���������� �������
-    private void OnChanged<T>(T arg) => Save();
-
-    // �������� ��� ������� � �����������
     private void OnMoneyChanged(int money) => Save();
     private void OnProductUnlocked(ProductData p) => Save();
     private void OnOrderGenerated(List<ProductData> orders) => Save();

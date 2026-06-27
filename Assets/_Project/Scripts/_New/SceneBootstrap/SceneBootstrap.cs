@@ -18,6 +18,7 @@ public class SceneBootstrap : MonoBehaviour
 
         // 3. ������ SaveManager � ������������� �� �������
         saveManager = new SaveManager();
+        gameServices.saveManager = saveManager;
         saveManager.Initialize(
             gameServices.moneyManager,
             gameServices.productManager,
@@ -65,19 +66,16 @@ public class SceneBootstrap : MonoBehaviour
     // �������� ����������� ���������� (���� ��� ������)
     void CreateManagers()
     {
-        void CreateManagers()
-        {
-            gameServices.moneyManager = new MoneyManager();
-            gameServices.productManager = new ProductManager();
-            gameServices.orderManager = new OrderManager();
-            gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
-            gameServices.orderManager.SetProductManager(gameServices.productManager);
-            gameServices.cartManager = new CartManager(gameServices.moneyManager);
-            gameServices.shopManager = new ShopManager(
-                gameServices.productManager, 
-                gameServices.moneyManager
-            );
-        }
+        gameServices.moneyManager = new MoneyManager();
+        gameServices.productManager = new ProductManager();
+        gameServices.orderManager = new OrderManager();
+        gameServices.orderManager.SetMoneyManager(gameServices.moneyManager);
+        gameServices.orderManager.SetProductManager(gameServices.productManager);
+        gameServices.cartManager = new CartManager(gameServices.moneyManager);
+        gameServices.shopManager = new ShopManager(
+            gameServices.productManager,
+            gameServices.moneyManager
+        );
     }
 
     // �������� �������� ��������� ����� Addressables
@@ -112,6 +110,12 @@ public class SceneBootstrap : MonoBehaviour
             // �����
             await InitPlayerManager();
             await gameServices.playerManager.SpawnPlayer(sceneData);
+
+            gameServices.dealSpawner = new DealSpawner(
+                gameServices.cartManager,
+                sceneData.dealSpawnPos,
+                Quaternion.identity
+            );
         }
         else
         {

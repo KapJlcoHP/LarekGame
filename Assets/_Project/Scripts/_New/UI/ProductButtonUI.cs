@@ -65,7 +65,11 @@ public class ProductButtonUI : MonoBehaviour
         productManager.OnProductUnlocked += OnProductUnlocked;
         cartManager.OnCartChanged += OnCartChanged;
 
-        // Первичная настройка состояния
+        actionButton.onClick.RemoveListener(OnActionButtonClicked);
+        unlockButton.onClick.RemoveListener(OnActionButtonClicked);
+        actionButton.onClick.AddListener(OnActionButtonClicked);
+        unlockButton.onClick.AddListener(OnActionButtonClicked);
+
         RefreshState();
     }
 
@@ -117,12 +121,14 @@ public class ProductButtonUI : MonoBehaviour
     {
         if (!productManager.IsUnlocked(product))
         {
-            // Используем метод ShopManager для проверки
-            actionButton.interactable = shopManager.CanAffordUnlock(product);
+            bool canAfford = shopManager.CanAffordUnlock(product);
+            actionButton.interactable = canAfford;
+            unlockButton.interactable = canAfford;
         }
         else
         {
             actionButton.interactable = true;
+            unlockButton.interactable = false;
         }
     }
 
@@ -203,7 +209,11 @@ public class ProductButtonUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Отписываемся от событий, чтобы избежать утечек
+        if (actionButton != null)
+            actionButton.onClick.RemoveListener(OnActionButtonClicked);
+        if (unlockButton != null)
+            unlockButton.onClick.RemoveListener(OnActionButtonClicked);
+
         if (moneyManager != null)
             moneyManager.OnMoneyChanged -= OnMoneyChanged;
         if (productManager != null)

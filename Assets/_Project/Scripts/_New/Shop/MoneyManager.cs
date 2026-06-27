@@ -52,7 +52,7 @@ public class MoneyManager : ISaveable<MoneySaveData>
     public void LoadSaveData(MoneySaveData data)
     {
         money = data.money;
-
+        UpdateMoneyUI();
     }
 }
 [System.Serializable]

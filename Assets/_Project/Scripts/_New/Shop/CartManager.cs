@@ -18,9 +18,25 @@ public class CartManager
     /// <summary>Событие после успешной сделки, передаёт словарь купленных продуктов и их количество.</summary>
     public event System.Action<Dictionary<ProductData, int>> OnDealPlaced;
 
+    public bool IsEmpty => items.Count == 0;
+    public IReadOnlyDictionary<ProductData, int> Items => items;
+
     public CartManager(MoneyManager moneyManager)
     {
         this.moneyManager = moneyManager;
+    }
+
+    public int GetTotalItemCount()
+    {
+        int total = 0;
+        foreach (var qty in items.Values)
+            total += qty;
+        return total;
+    }
+
+    public bool CanAffordDeal()
+    {
+        return !IsEmpty && moneyManager.Balance() >= GetTotalCost();
     }
 
     /// <summary>

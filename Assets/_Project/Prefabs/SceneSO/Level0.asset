@@ -25,3 +25,4 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   playerPos: {x: 0, y: 0.5, z: 0}
+  dealSpawnPos: {x: 2, y: 0.5, z: 0}

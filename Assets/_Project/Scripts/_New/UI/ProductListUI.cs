@@ -1,48 +1,55 @@
 using UnityEngine;
+
 public class ProductListUI : UIWindow
 {
     [SerializeField] private Transform contentParent;
     [SerializeField] private GameObject productButtonPrefab;
+    [SerializeField] private CartUI cartUI;
 
     private ProductManager productManager;
     private MoneyManager moneyManager;
     private CartManager cartManager;
-    private ShopManager shopManager; // НОВОЕ
+    private ShopManager shopManager;
 
     public void Init(
-        ProductManager pm, 
-        MoneyManager mm, 
-        CartManager cm, 
-        ShopManager sm, // НОВОЕ
+        ProductManager pm,
+        MoneyManager mm,
+        CartManager cm,
+        ShopManager sm,
         WindowManager wm)
     {
         base.Init(wm);
         productManager = pm;
         moneyManager = mm;
         cartManager = cm;
-        shopManager = sm; // Сохраняем ссылку
+        shopManager = sm;
 
-        // Подписываемся на загрузку каталога
+        if (cartUI == null)
+            cartUI = GetComponentInChildren<CartUI>(true);
+
+        cartUI?.Init(cm, mm);
+
         productManager.OnProductsLoaded += BuildProductList;
-        
-        // Если каталог уже загружен (мало ли), строим сразу
+
         if (productManager.AllProducts.Count > 0)
             BuildProductList();
     }
 
+    public override void Show()
+    {
+        base.Show();
+        cartUI?.Refresh();
+    }
+
     private void BuildProductList()
     {
-        // Очищаем контейнер
         foreach (Transform child in contentParent)
             Destroy(child.gameObject);
 
-        // Создаём кнопки для каждого продукта
         foreach (var product in productManager.AllProducts)
         {
             var buttonObj = Instantiate(productButtonPrefab, contentParent);
             var buttonUI = buttonObj.GetComponent<ProductButtonUI>();
-            
-            // Передаём ShopManager в карточку
             buttonUI.Setup(product, productManager, moneyManager, cartManager, shopManager);
         }
     }

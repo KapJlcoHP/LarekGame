@@ -4,35 +4,33 @@ public class UIRoot : MonoBehaviour
 {
     [SerializeField] private WindowManager windowManager;
     [SerializeField] private GameObject moneyUIPrefab;
-    [SerializeField] private GameObject productListPrefab; // НОВОЕ
-    
+    [SerializeField] private GameObject productListPrefab;
+
     private MoneyUI moneyUI;
-    private ProductListUI productListUI; // НОВОЕ
+    private ProductListUI productListUI;
 
     public void Initialize(GameServices services)
     {
-        // Создаём окно баланса
-        var moneyObj = Instantiate(moneyUIPrefab, transform);
+        Transform uiParent = windowManager.transform;
+
+        var moneyObj = Instantiate(moneyUIPrefab, uiParent);
         moneyUI = moneyObj.GetComponent<MoneyUI>();
         moneyUI.Init(services.moneyManager, windowManager);
         windowManager.RegisterWindow(moneyUI);
         windowManager.OpenWindow(moneyUI);
 
-        // НОВОЕ: Создаём окно списка продуктов
-        var listObj = Instantiate(productListPrefab, transform);
+        var listObj = Instantiate(productListPrefab, uiParent);
         productListUI = listObj.GetComponent<ProductListUI>();
         productListUI.Init(
-            services.productManager, 
-            services.moneyManager, 
+            services.productManager,
+            services.moneyManager,
             services.cartManager,
-            services.shopManager, // Передаём ShopManager
+            services.shopManager,
             windowManager
         );
         windowManager.RegisterWindow(productListUI);
-        // НЕ вызываем OpenWindow, так как у нас Вариант Б (открытие по кнопке)
     }
-    
-    // Публичный метод для открытия магазина (для кнопки на сцене)
+
     public void OpenShop()
     {
         if (productListUI != null)

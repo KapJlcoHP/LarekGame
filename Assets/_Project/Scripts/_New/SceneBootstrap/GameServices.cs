@@ -9,4 +9,5 @@ public class GameServices : MonoBehaviour
     public ProductManager productManager { get; set; }
     public ShopManager shopManager{ get; set; }
     public CartManager cartManager { get; set; }
+    public DealSpawner dealSpawner { get; set; }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b872542c97cd12349ae93ae057170e76, type: 3}
+  m_Name: Level0
+  m_EditorClassIdentifier: Assembly-CSharp::ScenePrefab
+  scenePref:
+    m_AssetGUID: 5deae04e9d457d1429475ef37c0dc528
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  playerPref:
+    m_AssetGUID: a10ae8994242eca459358d04f2544e3e
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  playerPos: {x: 0, y: 0.5, z: 0}
+  dealSpawnPos: {x: 2, y: 0.5, z: 0}

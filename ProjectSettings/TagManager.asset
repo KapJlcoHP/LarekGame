@@ -3,15 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PickupLogic
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Products
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

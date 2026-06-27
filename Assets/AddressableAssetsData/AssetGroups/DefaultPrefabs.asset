@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DefaultPrefabs
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: DefaultPrefabs
+  m_GUID: c2f570b1a1bbead4d891441c29a39d31
+  m_SerializeEntries:
+  - m_GUID: 0787caf6de3f05d46b2d04bf0b84ee54
+    m_Address: Carrot
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 099e6301ece25ed4fb1038e6913efd2f
+    m_Address: Cucumber
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59f1062b8ed7fc14790bfea92712b3f1
+    m_Address: Cabbage
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5deae04e9d457d1429475ef37c0dc528
+    m_Address: Assets/_Project/Prefabs/SceneSO/Environment.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a10ae8994242eca459358d04f2544e3e
+    m_Address: Assets/_Project/Prefabs/Player/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a517d55b8fcc1f14fac83dfc596e42db
+    m_Address: Potato
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d23398c3eb3854947b210ee684d2e06a
+    m_Address: tomato
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5cab5b221b1ca642950b9ca6449a27f
+    m_Address: PRODUCT_test
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FirstLevel
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 7bfdc26e12d5a324eb38f501c3d930da, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7a1ffddd585d6c44aba6bd80d3ecca54, type: 2}
+    - {fileID: 11400000, guid: 1ec9b074a97ba104e9ec904b1a9f60e6, type: 2}
